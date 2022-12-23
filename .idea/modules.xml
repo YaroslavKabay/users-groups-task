@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/users-groups-task.iml" filepath="$PROJECT_DIR$/users-groups-task.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/users-groups-task.iml" filepath="$PROJECT_DIR$/.idea/users-groups-task.iml" />
     </modules>
   </component>
 </project>
