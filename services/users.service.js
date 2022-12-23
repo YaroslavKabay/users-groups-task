@@ -5,10 +5,16 @@ module.exports = {
         return User.create(userObject);
     },
 
-    // getAllUsers(filter = {}) {
-    //     return User.find(filter);
-    // },
-    //
+    getAllUsers: () => User.find(),
+
+    updateUserByID(userId, newUserObject) {
+        return User.findOneAndUpdate({ _id: userId }, newUserObject, { new: true });
+    },
+
+    deleteUserById(userId){
+        return User.deleteOne({_id:userId});
+    }
+
     // getOneByParams(filter){
     //     return User.findOne(filter);
     // },
@@ -18,11 +24,6 @@ module.exports = {
     //         .populate('cars');
     // },
     //
-    // updateUserByID(userId, newUserObject) {
-    //     return User.findOneAndUpdate({ _id: userId }, newUserObject, { new: true });
-    // },
     //
-    // deleteUserById(userId){
-    //     return User.deleteOne({_id:userId});
-    // }
+
 };
