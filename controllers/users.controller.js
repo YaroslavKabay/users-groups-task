@@ -1,12 +1,10 @@
 const { statusCodes } = require('../constants');
-const {userService, tokenService} = require('../services');
+const {userService} = require('../services');
 
 module.exports={
 
     createUser: async (req, res, next) => {
         try{
-            // const hashPassword = await tokenService.hashPassword(req.body.password);
-            // const user = await userService.createUser({...req.body, password: hashPassword});
             const user = await userService.createUser(req.body);
 
             res.status(statusCodes.CREATE).json(user);
@@ -15,7 +13,6 @@ module.exports={
             next(e);
         }
     },
-
     getAllUsers: async (req, res, next) => {
         try {
             const users = await userService.getAllUsers();
@@ -25,10 +22,10 @@ module.exports={
             next(e);
         }
     },
-
     updateUserByID: async (req, res, next) => {
         try {
             const { userId } = req.params;
+
 
             const user = await userService.updateUserByID(userId, req.body);
 
@@ -37,7 +34,6 @@ module.exports={
             next(e);
         }
     },
-
     deleteUserById: async (req, res, next) => {
         try{
 

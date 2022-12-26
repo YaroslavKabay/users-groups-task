@@ -13,11 +13,11 @@ module.exports = {
 
     deleteUserById(userId){
         return User.deleteOne({_id:userId});
-    }
+    },
 
-    // getOneByParams(filter){
-    //     return User.findOne(filter);
-    // },
+    getOneByParams(filter){
+        return User.findOne(filter);
+    },
     //
     // getOneById(id){
     //     return User.findById(id).select(['+cars'])

@@ -24,9 +24,6 @@ userRouter.put(
     //     userMdlwr.checkIfUserEmailIsUniq,
     userController.updateUserByID );
 
-
-
-
 userRouter.delete(
     '/:userId',
     // commonMdlwr.checkIfIdIsValid('userId'),
@@ -34,14 +31,6 @@ userRouter.delete(
     // userMdlwr.checkIfUserPresent(),
     userController.deleteUserById );
 
-// userRouter.put(
-//     '/:userId',
-//     // commonMdlwr.checkIfIdIsValid('userId'),
-//     //     // commonMdlwr.checkIfBodyIsValid(updateUserValidator),
-//     //     // authMdlwr.checkIsAccessToken,
-//     //     // userMdlwr.checkIfUserPresent(),
-//     //     // userMdlwr.checkIfUserEmailIsUniq,
-//     //     // userController.updateUserByID );
 
 
 module.exports = userRouter;
