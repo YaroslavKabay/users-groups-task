@@ -36,7 +36,7 @@
 
 
 
-module.exports = {
-    newUserValidator,
-    updateUserValidator,
-};
+// module.exports = {
+//     newUserValidator,
+//     updateUserValidator,
+// };

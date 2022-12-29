@@ -1,8 +1,8 @@
 const { Router } = require('express');
 
-// const {positionMdlwr, generalMdlwr} = require('../middlewares');
+const { generalMdlwr} = require('../middlewares');
 const {groupsController} = require('../controllers');
-// const {updatePositionValidator,newPositionValidator}= require('../validators/position.validator');
+const {newGroupValidator, updateGroupValidator}= require('../validators/group.validator');
 
 const groupsRoute= Router();
 
@@ -10,13 +10,14 @@ groupsRoute.get('/', groupsController.getAllGroups);
 
 groupsRoute.post(
     '/',
-    // generalMdlwr.checkIfBodyIsValid(newPositionValidator),
+    generalMdlwr.checkIfBodyIsValid(newGroupValidator),
+    generalMdlwr.checkIfIdIsValid('users','body'),
     groupsController.createGroup );
 
 groupsRoute.put(
     '/:groupId',
-    // generalMdlwr.checkIfBodyIsValid(updatePositionValidator),
-    // generalMdlwr.checkIfIdIsValid('positionId'),
+    generalMdlwr.checkIfBodyIsValid(updateGroupValidator),
+    generalMdlwr.checkIfIdIsValid('groupId'),
     // positionMdlwr.checkIfPositionPresent(),
     groupsController.updateGroupByID );
 
