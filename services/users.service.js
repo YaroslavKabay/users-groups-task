@@ -17,13 +17,14 @@ module.exports = {
 
     getOneByParams(filter){
         return User.findOne(filter);
+
     },
-    //
-    // getOneById(id){
-    //     return User.findById(id).select(['+cars'])
-    //         .populate('cars');
-    // },
-    //
-    //
+
+    getOneById(id){
+        return User.findById(id).select(['+group'])
+            .populate('group'); // ???? select and populate
+    },
+
+
 
 };

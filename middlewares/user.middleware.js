@@ -6,15 +6,19 @@ const {User} = require('../dataBase');
 
 module.exports = {
 
-    checkIfUserEmailIsUniq: async (req, res, next) => {
+    checkIfValuesAreUnique: async (req, res, next) => {
         try {
-            const { email } = req.body;
+            const { email, username } = req.body;
             const { userId } = req.params;
 
-            const userByEmail = await userService.getOneByParams({ email, _id: { $ne: userId } });
+            const emailChecker = await userService.getOneByParams({ email,  _id: { $ne: userId } });
+            const usernameChecker = await userService.getOneByParams({ username,  _id: { $ne: userId } });
 
-            if (userByEmail) {
-                return next(new ApiError('User with this email is exist', statusCodes.CONFLICT));
+            if (emailChecker) {
+                return next(new ApiError('User with this email already exist', statusCodes.CONFLICT));
+            }
+            if (usernameChecker) {
+                return next(new ApiError('User with this username already exist', statusCodes.CONFLICT));
             }
 
             next();
@@ -22,7 +26,6 @@ module.exports = {
             next(e);
         }
     },
-
 
     checkIfUserPresent: (from = 'params') => async function(req, res, next) {
         try {
@@ -34,7 +37,7 @@ module.exports = {
                 return next(new ApiError('User not found', statusCodes.NOT_FOUND));
             }
 
-            req.user = user;
+            req.user = user; // ???
             next();
         } catch (e) {
             next(e);

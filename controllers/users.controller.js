@@ -26,7 +26,6 @@ module.exports={
         try {
             const { userId } = req.params;
 
-
             const user = await userService.updateUserByID(userId, req.body);
 
             res.json(user);

@@ -11,7 +11,7 @@ groupsRoute.get('/', groupsController.getAllGroups);
 groupsRoute.post(
     '/',
     generalMdlwr.checkIfBodyIsValid(newGroupValidator),
-    generalMdlwr.checkIfIdIsValid('users','body'),
+    // generalMdlwr.checkIfIdIsValid('users','body'),
     groupsController.createGroup );
 
 groupsRoute.put(

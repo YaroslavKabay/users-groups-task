@@ -3,8 +3,8 @@ const { Schema, model } = require('mongoose');
 const userSchema = new Schema({
     username: { type: String, trim: true, required: true },
     email: { type: String, trim: true, lowercase: true, required: true, unique: true },
-    groups: {
-        type: [Schema.Types.ObjectId],
+    group: {
+        type: Schema.Types.ObjectId,
         ref: 'group'
 
     },

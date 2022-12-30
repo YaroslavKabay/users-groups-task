@@ -1,15 +1,16 @@
 const { Router } = require('express');
 
-// const {authMdlwr, commonMdlwr, userMdlwr} = require('../middlewares');
+const {generalMdlwr, userMdlwr} = require('../middlewares');
 const {userController} = require('../controllers');
-// const {newUserValidator,updateUserValidator}= require('../validators/user.validators');
+const {newUserValidator,updateUserValidator}= require('../validators/user.validators');
 
 const userRouter = Router();
 
 userRouter.post(
     '/',
-    // commonMdlwr.checkIfBodyIsValid(newUserValidator),
-    // userMdlwr.checkIfUserEmailIsUniq,
+    generalMdlwr.checkIfBodyIsValid(newUserValidator),
+    userMdlwr.checkIfValuesAreUnique,
+    generalMdlwr.checkIfIdIsValid('group','body'),
     userController.createUser
 );
 
@@ -17,11 +18,10 @@ userRouter.get('/', userController.getAllUsers);
 
 userRouter.put(
     '/:userId',
-    // commonMdlwr.checkIfIdIsValid('userId'),
-    //     commonMdlwr.checkIfBodyIsValid(updateUserValidator),
-    //     authMdlwr.checkIsAccessToken,
-    //     userMdlwr.checkIfUserPresent(),
-    //     userMdlwr.checkIfUserEmailIsUniq,
+    generalMdlwr.checkIfIdIsValid('userId'),
+    generalMdlwr.checkIfBodyIsValid(updateUserValidator),
+    userMdlwr.checkIfUserPresent(),
+    userMdlwr.checkIfValuesAreUnique,
     userController.updateUserByID );
 
 userRouter.delete(
