@@ -37,7 +37,7 @@ module.exports = {
                 return next(new ApiError('User not found', statusCodes.NOT_FOUND));
             }
 
-            req.user = user; // ???
+            req.user = user;
             next();
         } catch (e) {
             next(e);

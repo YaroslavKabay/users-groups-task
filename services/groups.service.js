@@ -1,4 +1,5 @@
 const {Group} = require('../dataBase');
+const User = require("../dataBase/User");
 
 module.exports = {
     createGroup(userObject) {
@@ -13,6 +14,10 @@ module.exports = {
 
     deleteGroupById(groupId){
         return Group.deleteOne({_id:groupId});
+    },
+    getOneById(id){
+        return Group.findById(id).select(['+users'])
+            .populate('users'); // ???? select and populate
     },
     //
     // getOneByParams(filter){

@@ -1,11 +1,16 @@
 const { statusCodes } = require('../constants');
-const {userService} = require('../services');
+const {userService,groupService} = require('../services');
 
 module.exports={
 
     createUser: async (req, res, next) => {
         try{
-            const user = await userService.createUser(req.body);
+
+            const { _id, users } = req.group;
+
+            const user = await userService.createUser({ ...req.body, group: _id });
+
+            await groupService.updateGroupByID(_id, { users: [ ...users, user._id ] });
 
             res.status(statusCodes.CREATE).json(user);
 
@@ -40,6 +45,7 @@ module.exports={
 
 
             await userService.deleteUserById(userId);
+            // await groupService.updateGroupByID(gropuId) todo remove user from group
 
 
             res.sendStatus(statusCodes.NO_CONTENT);

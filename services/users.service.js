@@ -21,10 +21,9 @@ module.exports = {
     },
 
     getOneById(id){
-        return User.findById(id).select(['+group'])
+        return User.findById(id)
+            .select(['+group'])
             .populate('group'); // ???? select and populate
     },
-
-
 
 };

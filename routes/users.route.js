@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const {generalMdlwr, userMdlwr} = require('../middlewares');
+const {generalMdlwr, userMdlwr, groupMdlwr} = require('../middlewares');
 const {userController} = require('../controllers');
 const {newUserValidator,updateUserValidator}= require('../validators/user.validators');
 
@@ -11,6 +11,7 @@ userRouter.post(
     generalMdlwr.checkIfBodyIsValid(newUserValidator),
     userMdlwr.checkIfValuesAreUnique,
     generalMdlwr.checkIfIdIsValid('group','body'),
+    groupMdlwr.checkIfGroupIsPresent('body'),
     userController.createUser
 );
 
@@ -26,11 +27,9 @@ userRouter.put(
 
 userRouter.delete(
     '/:userId',
-    // commonMdlwr.checkIfIdIsValid('userId'),
-    // authMdlwr.checkIsAccessToken,
-    // userMdlwr.checkIfUserPresent(),
+    generalMdlwr.checkIfIdIsValid('userId'),
+    userMdlwr.checkIfUserPresent(),
     userController.deleteUserById );
-
 
 
 module.exports = userRouter;
