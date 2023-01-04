@@ -9,7 +9,7 @@ const userRouter = Router();
 userRouter.post(
     '/',
     generalMdlwr.checkIfBodyIsValid(newUserValidator),
-    // userMdlwr.checkIfValuesAreUnique,
+    userMdlwr.checkIfValuesAreUnique,
     generalMdlwr.checkIfIdIsValid('group','body'),
     groupMdlwr.checkIfGroupIsPresent('body'),
     userController.createUser
@@ -22,6 +22,7 @@ userRouter.put(
     generalMdlwr.checkIfIdIsValid('userId'),
     generalMdlwr.checkIfBodyIsValid(updateUserValidator),
     userMdlwr.checkIfUserPresent(),
+    groupMdlwr.checkIfGroupIsPresent('body'),
     userMdlwr.checkIfValuesAreUnique,
     userController.updateUserByID );
 

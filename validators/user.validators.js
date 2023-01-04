@@ -29,6 +29,7 @@ const newUserValidator = Joi.object({
 const updateUserValidator = Joi.object({
     username: usernameValidator,
     email: emailValidator,
+    group: groupValidator
 
 });
 
