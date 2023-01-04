@@ -40,13 +40,11 @@ module.exports={
     },
     deleteUserById: async (req, res, next) => {
         try{
+            const {  _id: userId, group } = req.user;
 
-            const { userId } = req.params;
-
+            await groupService.deleteUserFromGroupByID(group._id, userId);
 
             await userService.deleteUserById(userId);
-            // await groupService.updateGroupByID(gropuId) todo remove user from group
-
 
             res.sendStatus(statusCodes.NO_CONTENT);
 
