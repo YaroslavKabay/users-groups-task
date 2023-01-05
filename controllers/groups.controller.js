@@ -2,7 +2,6 @@ const { statusCodes } = require('../constants');
 const { groupService} = require('../services');
 
 module.exports = {
-
     createGroup: async (req, res, next) => {
         try {
             const group = await groupService.createGroup(req.body);
@@ -37,9 +36,7 @@ module.exports = {
 
             const { groupId } = req.params;
 
-
             await groupService.deleteGroupById(groupId);
-
 
             res.sendStatus(statusCodes.NO_CONTENT);
 

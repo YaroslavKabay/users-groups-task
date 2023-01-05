@@ -11,7 +11,7 @@ userRouter.post(
     generalMdlwr.checkIfBodyIsValid(newUserValidator),
     userMdlwr.checkIfValuesAreUnique,
     generalMdlwr.checkIfIdIsValid('group','body'),
-    groupMdlwr.checkIfGroupIsPresent('body'),
+    groupMdlwr.checkIfGroupIsPresent('body','group'),
     userController.createUser
 );
 
@@ -22,7 +22,7 @@ userRouter.put(
     generalMdlwr.checkIfIdIsValid('userId'),
     generalMdlwr.checkIfBodyIsValid(updateUserValidator),
     userMdlwr.checkIfUserPresent(),
-    groupMdlwr.checkIfGroupIsPresent('body'),
+    groupMdlwr.checkIfGroupIsPresent('body','group'),
     userMdlwr.checkIfValuesAreUnique,
     userController.updateUserByID );
 

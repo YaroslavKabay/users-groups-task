@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const {usersRoute, groupsRoute} = require('./routes');
 const {PORT, MONGO_URL} = require('./configs/configs');
@@ -9,6 +10,9 @@ const {mainErrorHandler} = require('./errors');
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(cors({
+    origin: '*'
+}));
 
 app.use('/users', usersRoute);
 app.use('/groups', groupsRoute);

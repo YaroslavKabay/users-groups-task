@@ -9,7 +9,10 @@ module.exports={
             const { _id, users } = req.group;
 
             const user = await userService.createUser({ ...req.body, group: _id });
-            await groupService.updateGroupByID(_id, { users: [ ...users, user._id ] });
+            await groupService.updateGroupByID(_id, { users: [
+                ...users,
+                user._id 
+            ] });
 
             res.status(statusCodes.CREATE).json(user);
 
@@ -30,14 +33,17 @@ module.exports={
     updateUserByID: async (req, res, next) => {
         try {
             const { _id: groupFromBody, users } = req.group;
-            const {  _id: userId, group: groupFromDB } = req.user;
+            const { _id: userId, group: groupFromDB } = req.user;
 
             if (groupFromBody.toHexString() === groupFromDB._id.toHexString()){
-                await userService.updateUserByID(userId, req.body)
+                await userService.updateUserByID(userId, req.body);
             } else {
                 await groupService.deleteUserFromGroupByID(groupFromDB._id, userId);
                 await userService.updateUserByID(userId, req.body);
-                await groupService.updateGroupByID(groupFromBody, { users: [ ...users, userId] });
+                await groupService.updateGroupByID(groupFromBody, { users: [
+                    ...users,
+                    userId
+                ] });
             }
 
             res.sendStatus(statusCodes.OK);
@@ -48,7 +54,7 @@ module.exports={
     },
     deleteUserById: async (req, res, next) => {
         try{
-            const {  _id: userId, group } = req.user;
+            const { _id: userId, group } = req.user;
 
             await groupService.deleteUserFromGroupByID(group._id, userId);
             await userService.deleteUserById(userId);

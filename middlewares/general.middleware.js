@@ -1,15 +1,14 @@
-const {isObjectIdOrHexString} = require('mongoose')
+const {isObjectIdOrHexString} = require('mongoose');
 
 const {ApiError} = require('../errors');
 const { statusCodes } = require('../constants');
 
 module.exports = {
-    checkIfIdIsValid: (fieldName, from='params') =>  (req, res, next) => {
+    checkIfIdIsValid: (fieldName, from='params') => (req, res, next) => {
         try {
-            // console.log(req[from][fieldName]);
-            // console.log(req.query);
+
             if (!isObjectIdOrHexString(req[from][fieldName])) {
-                return next(new ApiError('Not valid ID', statusCodes.BAD_REQUEST))
+                return next(new ApiError('Not valid ID', statusCodes.BAD_REQUEST));
             }
 
             next();
@@ -18,8 +17,6 @@ module.exports = {
             next(e);
         }
     },
-
-
     checkIfBodyIsValid : (validatorType) => (req,res,next) => {
         try {
 
@@ -37,4 +34,4 @@ module.exports = {
             next(e);
         }
     },
-}
+};

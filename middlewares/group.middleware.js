@@ -1,38 +1,31 @@
 const {ApiError} = require('../errors');
-const {userService, groupService} = require('../services');
+const {groupService} = require('../services');
 const {statusCodes} = require('../constants');
-const {User} = require('../dataBase');
 
 
 module.exports = {
 
-    // checkIfValuesAreUnique: async (req, res, next) => {
-    //     try {
-    //         const { email, username } = req.body;
-    //         const { userId } = req.params;
-    //
-    //         const emailChecker = await userService.getOneByParams({ email,  _id: { $ne: userId } });
-    //         const usernameChecker = await userService.getOneByParams({ username,  _id: { $ne: userId } });
-    //
-    //         if (emailChecker) {
-    //             return next(new ApiError('User with this email already exist', statusCodes.CONFLICT));
-    //         }
-    //         if (usernameChecker) {
-    //             return next(new ApiError('User with this username already exist', statusCodes.CONFLICT));
-    //         }
-    //
-    //         next();
-    //     } catch (e) {
-    //         next(e);
-    //     }
-    // },
-
-    checkIfGroupIsPresent: (from = 'params') => async function(req, res, next) {
+    checkIfNameIsUnique: async (req, res, next) => {
         try {
-            const { group } = req[from];
-            // console.log(req.body);
+            const { name } = req.body;
+            const { groupId } = req.params;
 
-            const groupChecker = await groupService.getOneById(group);
+            const nameChecker = await groupService.getOneByParams({ name, _id: { $ne: groupId } });
+
+            if (nameChecker) {
+                return next(new ApiError('Group with this name already exist', statusCodes.CONFLICT));
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+    checkIfGroupIsPresent: (from = 'params', filedName = 'groupId') => async function(req, res, next) {
+        try {
+            const filedToSearch = req[from][filedName];
+
+            const groupChecker = await groupService.getOneById( filedToSearch );
 
             if (!groupChecker) {
                 return next(new ApiError('Group not found', statusCodes.NOT_FOUND));
@@ -40,25 +33,26 @@ module.exports = {
 
             req.group = groupChecker;
             next();
+
         } catch (e) {
             next(e);
         }
     },
-    //
-    // getUserDynamicaly: (from = 'body', filedName = 'userId', dbField = filedName) => async function(req, res, next) {
-    //     try {
-    //         const filedToSearch = req[from][filedName];
-    //
-    //         const user = await User.findOne({ [dbField]: filedToSearch });
-    //
-    //         if (!user) {
-    //             return next(new ApiError('User not found', statusCodes.NOT_FOUND));
-    //         }
-    //
-    //         req.user = user;
-    //         next();
-    //     } catch (e) {
-    //         next(e);
-    //     }
-    // }
+
+    checkIfGroupIsEmpty: async (req, res, next) => {
+        try {
+            const { groupId } = req.params;
+
+            const usersChecker = await groupService.getOneByParams( {_id: groupId, users: {$exists: true, $ne: []}});
+
+            if (usersChecker) {
+                return next(new ApiError('Group is not empty. Please remove users first', statusCodes.CONFLICT));
+            }
+
+            next();
+        } catch (e) {
+            next(e);
+        }
+    },
+
 };
