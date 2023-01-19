@@ -1,0 +1,23 @@
+{
+  "scripts": {
+    "start": "../node_modules/.bin/nodemon app.js",
+    "lint": "../node_modules/.bin/eslint --fix --ext .js ."
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "email-templates": "^10.0.1",
+    "express": "^4.18.2",
+    "joi": "^17.7.0",
+    "mongoose": "^6.7.2",
+    "nodemailer": "^6.8.0",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^6.4.6",
+    "eslint": "8.22.0",
+    "eslint-plugin-node": "^11.1.0",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.7.1"
+  }
+}
