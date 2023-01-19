@@ -1,11 +1,11 @@
 import React from 'react';
 
-const BodyPage = () => {
+const NotFoundPage = () => {
     return (
         <div>
-            BodyPage
+            NotFoundPage
         </div>
     );
 };
 
-export {BodyPage};
+export {NotFoundPage};

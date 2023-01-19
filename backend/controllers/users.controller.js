@@ -45,8 +45,9 @@ module.exports={
                     userId
                 ] });
             }
+            const updatedUser = await userService.getOneByParams(userId);
 
-            res.sendStatus(statusCodes.OK);
+            res.json(updatedUser);
 
         } catch (e) {
             next(e);

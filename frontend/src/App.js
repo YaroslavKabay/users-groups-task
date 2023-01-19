@@ -1,12 +1,20 @@
-import {BodyPage, HeaderPage} from "./pages";
+import {Route, Routes} from "react-router-dom" ;
 
-const App = () => {
-  return (
-      <div>
-        <HeaderPage/>
-        <BodyPage/>
-      </div>
-  );
-};
+import {GroupsPage, NotFoundPage, UsersPage, UserEditPage} from "./pages";
+import {MainLayout} from "./layouts";
+
+function App() {
+    return (
+        <Routes>
+            <Route path={'/'} element={<MainLayout/>}>
+                <Route path={'users'} element={<UsersPage/>}>
+                    <Route path={':_id'} element={<UserEditPage/>}/>
+                </Route>
+                <Route path={'groups'} element={<GroupsPage/>}/>
+            </Route>
+            <Route path={'*'} element={<NotFoundPage/>}/>
+        </Routes>
+    );
+}
 
 export {App};

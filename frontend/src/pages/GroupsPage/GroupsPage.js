@@ -1,9 +1,10 @@
 import React from 'react';
+import {Groups} from "../../components";
 
 const GroupsPage = () => {
     return (
         <div>
-            GroupsPage
+            <Groups/>
         </div>
     );
 };
