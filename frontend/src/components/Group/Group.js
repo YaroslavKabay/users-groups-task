@@ -1,20 +1,25 @@
 import {useDispatch} from "react-redux";
 
 import css from './Group.module.css';
-import {carActions} from "../../redux";
+import { groupActions } from "../../redux";
+import {Link} from "react-router-dom";
 
 const Group = ({group}) => {
-    const {id, name, description, year} = group;
+    const { _id, name, description} = group;
 
     const dispatch = useDispatch();
     return (
         <div className={css.Group}>
-            {/*<div>id: {id}</div>*/}
             <div>name: {name}</div>
             <div>description: {description}</div>
-            {/*<div>year: {year}</div>*/}
-            {/*<button onClick={() => dispatch(carActions.setCarForUpdate(car))}>updateCar</button>*/}
-            {/*<button onClick={() => dispatch(carActions.del({id}))}>delete</button>*/}
+
+            <Link to={`${_id}`} state={group}>
+                <button onClick={() => dispatch(groupActions.setGroupForUpdate(group))}>Edit</button>
+            </Link>
+
+            <Link to={`${_id}`} state={group}>
+                <button onClick={() => dispatch(groupActions.del({_id}))}>Delete</button>
+            </Link>
         </div>
     );
 };

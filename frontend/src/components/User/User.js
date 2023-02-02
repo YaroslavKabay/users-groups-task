@@ -13,7 +13,6 @@ const User = ({user}) => {
             <div>_id: {_id}</div>
             <div>username: {username}</div>
             <div>email: {email}</div>
-            {/*<div>year: {year}</div>*/}
             <Link to={`${_id}`} state={user}>
                 <button onClick={() => dispatch(userActions.setUserForUpdate(user))}>updateUser</button>
             </Link>

@@ -1,7 +1,8 @@
 import {createAsyncThunk, createSlice, current} from "@reduxjs/toolkit";
+
 import {userService} from "../../services";
 
-const initialState = {// початковий стан слайсу
+const initialState = {
     cars: [],
     users: [],
     userForUpdate: null,
@@ -21,10 +22,10 @@ const getAll = createAsyncThunk(
 );
 const create = createAsyncThunk(
     'userSlice/create',
-    async ({car}, {rejectWithValue})=>{
+    async ({user}, {rejectWithValue})=>{
         try {
             const {data} = await userService.create(
-                car
+                user
             );
             return data
         }catch (e){
@@ -47,9 +48,9 @@ const del = createAsyncThunk(
 
 const updateById = createAsyncThunk(
     'userSlice/updateById',
-    async ({id, user}, {rejectWithValue}) => {
+    async ({_id, user}, {rejectWithValue}) => {
         try {
-            const {data} = await userService.updateById(id, user);
+            const {data} = await userService.updateById(_id, user);
             return data
         }catch (e) {
             return rejectWithValue(e.response.data)
@@ -79,12 +80,12 @@ const userSlice = createSlice({
                 state.userForUpdate = null
                 })
             .addCase(del.fulfilled, (state, action) => {
-                const index = state.users.findIndex(car=>car.id === action.payload);
+                const index = state.users.findIndex(value => value.id === action.payload);
                 state.users.splice(index, 1)
             })
-            // .addCase(create.fulfilled, (state, action) => {
-            //     state.users.push(action.payload)
-            // })
+            .addCase(create.fulfilled, (state, action) => {
+                state.users.push(action.payload)
+            })
             .addDefaultCase((state, action) => {
                 const [type] = action.type.split('/').splice(-1); // забирає останній елемент стрічки
                 if (type === 'rejected'){

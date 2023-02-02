@@ -2,20 +2,17 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 import {groupService} from "../../services";
 
-const initialState = {// початковий стан слайсу
+const initialState = {
     cars: [],
     groups: [],
-    carForUpdate: null,
+    groupForUpdate: null,
     errors: null
 };
 
 const getAll = createAsyncThunk(
-    'carSlice/getAll',
+    'groupSlice/getAll',
     async (_, {rejectWithValue, dispatch, getState}) => {
         try {
-            // dispatch(setCarForUpdate())
-            // const state = getState();
-            // console.log(state);
             const {data} = await groupService.getAll();
             return data
         } catch (e) {
@@ -24,11 +21,11 @@ const getAll = createAsyncThunk(
     }
 );
 const create = createAsyncThunk(
-    'carSlice/create',
-    async ({car}, {rejectWithValue})=>{
+    'groupSlice/create',
+    async ({group}, {rejectWithValue})=>{
         try {
             const {data} = await groupService.create(
-                car
+                group
             );
             return data
         }catch (e){
@@ -38,11 +35,11 @@ const create = createAsyncThunk(
 );
 
 const del = createAsyncThunk(
-    'carSlice/delete',
-    async ({id}, {rejectWithValue})=>{
+    'groupSlice/delete',
+    async ({_id}, {rejectWithValue})=>{
         try {
-            await groupService.deleteById(id)
-            return id
+            await groupService.deleteById(_id)
+            return _id
         }catch (e) {
             return rejectWithValue(e.response.data)
         }
@@ -50,10 +47,10 @@ const del = createAsyncThunk(
 );
 
 const updateById = createAsyncThunk(
-    'carSlice/updateById',
-    async ({id, car}, {rejectWithValue}) => {
+    'groupSlice/updateById',
+    async ({_id, group}, {rejectWithValue}) => {
         try {
-            const {data} = await groupService.updateById(id, car);
+            const {data} = await groupService.updateById(_id, group);
             return data
         }catch (e) {
             return rejectWithValue(e.response.data)
@@ -62,11 +59,11 @@ const updateById = createAsyncThunk(
 );
 
 const groupSlice = createSlice({
-    name: 'carSlice',
+    name: 'groupSlice',
     initialState,
     reducers: {
-        setCarForUpdate: (state, action) => { // стейт це інітіал стейт
-            state.carForUpdate = action.payload
+        setGroupForUpdate: (state, action) => { // стейт це інітіал стейт
+            state.groupForUpdate = action.payload
         }
     },// логіка слайсу
     extraReducers: (builder) => // асинхронні методи з асинксанку
@@ -76,18 +73,18 @@ const groupSlice = createSlice({
                 state.groups = action.payload
                 // console.log(state.groups);
             })
-            // .addCase(updateById.fulfilled, (state, action) => {
-            //         const currentCar = state.cars.find(value => value.id === action.payload.id);
-            //         Object.assign(currentCar, action.payload);
-            //         state.carForUpdate = null
-            //     }
-            // )
+            .addCase(updateById.fulfilled, (state, action) => {
+                    const currentGroup = state.groups.find(value => value._id === action.payload._id);
+                    Object.assign(currentGroup, action.payload);
+                    state.groupForUpdate = null
+                }
+            )
             .addCase(del.fulfilled, (state, action) => {
-                const index = state.cars.findIndex(car=>car.id === action.payload);
-                state.cars.splice(index, 1)
+                const index = state.groups.findIndex(group=>group.id === action.payload);
+                state.groups.splice(index, 1)
             })
             .addCase(create.fulfilled, (state, action) => {
-                state.cars.push(action.payload)
+                state.groups.push(action.payload)
             })
             .addDefaultCase((state, action) => {
                 const [type] = action.type.split('/').splice(-1); // забирає останній елемент стрічки
@@ -99,11 +96,11 @@ const groupSlice = createSlice({
             })
 });
 
-const {reducer: groupReducer, actions: {setCarForUpdate}} = groupSlice;
+const {reducer: groupReducer, actions: {setGroupForUpdate}} = groupSlice;
 
 const groupActions = {
     getAll,
-    setCarForUpdate,
+    setGroupForUpdate,
     updateById,
     create,
     del

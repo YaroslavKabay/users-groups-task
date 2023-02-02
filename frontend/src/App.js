@@ -1,7 +1,16 @@
 import {Route, Routes} from "react-router-dom" ;
 
-import {GroupsPage, NotFoundPage, UsersPage, UserEditPage} from "./pages";
+import {
+    GroupsPage,
+    NotFoundPage,
+    UsersPage,
+    UserEditPage,
+    UserCreatePage,
+    GroupEditPage,
+    GroupCreatePage
+} from "./pages";
 import {MainLayout} from "./layouts";
+
 
 function App() {
     return (
@@ -9,8 +18,12 @@ function App() {
             <Route path={'/'} element={<MainLayout/>}>
                 <Route path={'users'} element={<UsersPage/>}>
                     <Route path={':_id'} element={<UserEditPage/>}/>
+                    <Route path={'create'} element={<UserCreatePage/>}/>
                 </Route>
-                <Route path={'groups'} element={<GroupsPage/>}/>
+                <Route path={'groups'} element={<GroupsPage/>}>
+                    <Route path={':_id'} element={<GroupEditPage/>}/>
+                    <Route path={'create'} element={<GroupCreatePage/>}/>
+                </Route>
             </Route>
             <Route path={'*'} element={<NotFoundPage/>}/>
         </Routes>
